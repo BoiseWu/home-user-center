@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>home-user-center</artifactId>
+        <groupId>home-user-center</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>home-user-center-client</artifactId>
+
+
+   <!-- <distributionManagement>
+
+    <repository>
+         <id>central</id>
+         <name>CentralRepository</name>
+         <url>http://maven.oschina.net/content/groups/public/</url>
+
+     </repository>
+     <snapshotRepository>
+         <id>snapshots</id>
+         <name>SnapshotsRepository</name>
+         <url>http://maven.oschina.net/content/groups/public/</url>
+     </snapshotRepository>
+
+
+ </distributionManagement>-->
+
+ <!--<repositories>
+     <repository>
+         <id>jboss</id>
+         <name>JBoss Repository</name>
+         <url>http://repository.jboss.com/maven2/</url>
+         <releases>
+             <updatePolicy>daily</updatePolicy>&lt;!&ndash; never,always,interval n &ndash;&gt;
+                <enabled>true</enabled>
+                <checksumPolicy>warn</checksumPolicy>&lt;!&ndash; fail,ignore &ndash;&gt;
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <layout>default</layout>
+        </repository>
+    </repositories>-->
+
+
+    <build>
+        <finalName>home-user-center-client-${version}</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>attach-sources</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <encoding>utf-8</encoding>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+
+
+</project>

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.home.user.center.dao.MessageDao">
+
+    <resultMap id="MessageResultMap" type="Message">
+        <result property="id" column="id"/>
+        <result property="userId" column="user_id"/>
+        <result property="toUserId" column="to_user_id"/>
+        <result property="message" column="message"/>
+        <result property="type" column="type"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <sql id="TABLE_NAME">
+        <![CDATA[ message ]]>
+    </sql>
+
+    <sql id="QUERY_FROM_TABLE"><![CDATA[FROM message]]></sql>
+
+    <sql id="QUERY_WHERE_CLAUSE">
+
+        <where>
+            <if test="userId != null"><![CDATA[AND (message.user_id = #{userId} OR message.to_user_id = #{userId})]]></if>
+            <![CDATA[AND message.type = 1]]>
+        </where>
+    </sql>
+
+    <insert id="insert" parameterType="Picture" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[INSERT INTO]]>
+        <include refid="TABLE_NAME"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userId != null">user_id,</if>
+            <if test="toUserId != null">to_user_id,</if>
+            <if test="message != '' and message != null">message,</if>
+            <if test="type != null">type,</if>
+            create_time
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userId != null">#{userId},</if>
+            <if test="toUserId != null">#{toUserId},</if>
+            <if test="message != '' and message != null">#{message},</if>
+            <if test="type != null">#{type},</if>
+            now()
+        </trim>
+    </insert>
+
+    <select id="selectMessageCount" parameterType="Message" resultType="int">
+        <![CDATA[SELECT COUNT(id) AS dataCount]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+    <select id="selectList" parameterType="Message" resultMap="MessageResultMap" >
+        <![CDATA[SELECT * ]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+</mapper>

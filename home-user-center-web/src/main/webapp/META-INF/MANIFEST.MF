@@ -1,0 +1,3 @@
+Manifest-Version: 1.0
+Class-Path: home-user-center-service-1.0-SNAPSHOT.jar
+

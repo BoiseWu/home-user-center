@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.home.user.center.dao.UserGroupDao">
+    <resultMap id="userGroupResultMap" type="UserGroup">
+        <result property="id" column="id"/>
+        <result property="groupName" column="group_name"/>
+        <result property="createUserId" column="create_user_id"/>
+        <result property="createTime" column="create_time"/>
+        <result property="groupType" column="group_type"/>
+        <result property="flag" column="flag"/>
+
+    </resultMap>
+
+    <sql id="QUERY_FROM_TABLE"><![CDATA[ FROM sys_user_group ]]></sql>
+    <sql id="TABLE_NAME"><![CDATA[ sys_user_group ]]></sql>
+
+    <sql id="QUERY_WHERE_CLAUSE">
+        <where>
+            <if test="id != null"><![CDATA[AND id = #{id}]]></if>
+            <if test="groupName != null and groupName != null"><![CDATA[AND group_name = #{groupName}]]></if>
+            <if test="createUserId != null"><![CDATA[AND create_user_id = #{createUserId}]]></if>
+            <if test="groupType != null"><![CDATA[AND group_type= #{groupType}]]></if>
+            <if test="flag != null"><![CDATA[AND flag= #{flag}]]></if>
+        </where>
+    </sql>
+
+    <select id="selectById" parameterType="long" resultMap="userGroupResultMap" >
+        <![CDATA[SELECT * ]]>
+        <include refid="QUERY_FROM_TABLE" />
+        <where>
+            <![CDATA[ id = #{id}]]>
+        </where>
+    </select>
+
+    <insert id="insert" parameterType="UserGroup" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[INSERT INTO]]>
+        <include refid="TABLE_NAME"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="groupName != null  and groupName != ''">group_name,</if>
+            <if test="createUserId  != null">create_user_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="groupType != null">group_type,</if>
+            <if test="flag != null">flag,</if>
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="groupName != '' and groupName != null">#{groupName},</if>
+            <if test="createUserId != null">#{createUserId},</if>
+            <if test="createTime !=  null">#{createTime},</if>
+            <if test="groupType != null">#{groupType},</if>
+            <if test="flag != null">#{flag},</if>
+        </trim>
+    </insert>
+    
+    <update id="updateById" parameterType="UserGroup" >
+        <![CDATA[UPDATE]]>
+        <include refid="TABLE_NAME"/>
+        <include refid="UPDATE_COLUMN_SET"/>
+        <![CDATA[WHERE id = #{id}]]>
+    </update>
+
+    <sql id="UPDATE_COLUMN_SET">
+        <set>
+            <if test="groupName != null and groupName !=''"><![CDATA[group_name = #{groupName},]]></if>
+            <if test="groupType != null "><![CDATA[group_type = #{groupType},]]></if>
+            <if test="flag != null "><![CDATA[flag = #{flag},]]></if>
+        </set>
+    </sql>
+</mapper>

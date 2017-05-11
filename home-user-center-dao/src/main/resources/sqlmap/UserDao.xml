@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.home.user.center.dao.UserDao">
+
+    <resultMap id="userResultMap" type="User">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPass" column="user_pass"/>
+        <result property="userType" column="user_type"/>
+        <result property="userPic" column="user_pic"/>
+        <result property="userStatus" column="user_status"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <resultMap id="userDetialResultMap" type="User">
+        <result property="id" column="id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPass" column="user_pass"/>
+        <result property="userType" column="user_type"/>
+        <result property="userPic" column="user_pic"/>
+        <result property="userStatus" column="user_status"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userEmail" column="user_email"/>
+        <result property="updateTime" column="update_time"/>
+        <result property="createTime" column="create_time"/>
+        <collection property="userGroup" column="group_id"
+                    select="com.home.user.center.dao.UserGroupDao.selectById"/>
+    </resultMap>
+
+    <sql id="TABLE_NAME">
+        <![CDATA[ sys_user ]]>
+    </sql>
+
+
+    <sql id="QUERY_COLUMN_LIST">
+        <![CDATA[sys_user.id as id]]>
+    </sql>
+
+    <sql id="QUERY_FROM_TABLE"><![CDATA[FROM sys_user]]></sql>
+
+    <sql id="QUERY_WHERE_CLAUSE">
+        <where>
+            <if test="id != null and id != ''"><![CDATA[AND sys_user.id = #{id}]]></if>
+            <if test="userType != null"><![CDATA[AND sys_user.user_type = #{userType}]]></if>
+            <if test="userName != '' and userName != null"><![CDATA[AND sys_user.user_name = #{userName}]]></if>
+            <if test="userPass != '' and userPass != null"><![CDATA[AND sys_user.user_pass = #{userPass}]]></if>
+            <if test="userStatus != null"><![CDATA[AND sys_user.user_status = #{userStatus}]]></if>
+            <if test="userPhone != '' and userPhone != null"><![CDATA[AND sys_user.user_phone = #{userPhone}]]></if>
+            <if test="userEmail != '' and userEmail != null"><![CDATA[AND sys_user.user_email = #{userEmail}]]></if>
+        </where>
+    </sql>
+
+    <sql id="UPDATE_COLUMN_SET">
+        <set>
+            <if test="userType != null"><![CDATA[sys_user.user_type = #{userType},]]></if>
+            <if test="userName != '' and userName != null"><![CDATA[sys_user.user_name = #{userName},]]></if>
+            <if test="userPass != '' and userPass != null"><![CDATA[sys_user.user_pass = #{userPass},]]></if>
+            <if test="userPic != '' and userPic != null"><![CDATA[sys_user.user_pic = #{userPic},]]></if>
+            <if test="userPhone != '' and userPhone != null"><![CDATA[sys_user.user_phone = #{userPhone},]]></if>
+            <if test="userEmail != '' and userEmail != null"><![CDATA[sys_user.user_email = #{userEmail},]]></if>
+            <if test="userStatus != null"><![CDATA[sys_user.user_status = #{userStatus},]]></if>
+            <if test="id != null"><![CDATA[sys_user.id = #{id},]]></if>
+            <![CDATA[sys_user.update_time = now(),]]>
+        </set>
+    </sql>
+
+    <!--<sql id="LEFT_JOIN_USER">
+        <![CDATA[LEFT JOIN user on after_sale_service.creator_id=user.id]]>
+    </sql>-->
+
+   <!-- <select id="lastSequence" resultType="int"><![CDATA[SELECT LAST_INSERT_ID() AS id]]></select>-->
+
+    <insert id="insert" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        <![CDATA[INSERT INTO]]>
+        <include refid="TABLE_NAME"/>
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="userType != null">user_type,</if>
+            <if test="userName != '' and userName != null">user_name,</if>
+            <if test="userPass != '' and userPass != null">user_pass,</if>
+            create_time,
+            <if test="userPic != '' and userPic != null">user_pic,</if>
+            <if test="userStatus != null">user_status,</if>
+            <if test="userPhone != '' and userPhone != null">user_phone,</if>
+            <if test="userEmail != '' and userEmail != null">user_email,</if>
+
+        </trim>
+        <trim prefix="VALUES (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="userType != null">#{userType},</if>
+            <if test="userName != '' and userName != null">#{userName},</if>
+            <if test="userPass != '' and userPass != null">#{userPass},</if>
+            now(),
+            <if test="userPic != '' and userPic != null">#{userPic},</if>
+            <if test="userStatus != null">#{userStatus},</if>
+            <if test="userPhone != '' and userPhone != null">#{userPhone},</if>
+            <if test="userEmail != '' and userEmail != null">#{userEmail},</if>
+        </trim>
+    </insert>
+
+    <update id="updateById" parameterType="User">
+        <![CDATA[UPDATE]]>
+        <include refid="TABLE_NAME"/>
+        <include refid="UPDATE_COLUMN_SET"/>
+        <![CDATA[WHERE id = #{id}]]>
+    </update>
+
+    <select id="query" parameterType="User" resultMap="userResultMap">
+        <![CDATA[SELECT]]>
+        <include refid="QUERY_COLUMN_LIST"/>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+    <select id="selectUserCount" parameterType="User" resultType="int">
+        <![CDATA[SELECT COUNT(id) AS dataCount]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+    <select id="selectList" parameterType="User" resultMap="userResultMap" >
+        <![CDATA[SELECT * ]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+    <select id="selectById" parameterType="long" resultMap="userResultMap" >
+        <![CDATA[SELECT * ]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+
+    </select>
+
+    <select id="selectDetial" parameterType="User" resultMap="userDetialResultMap" >
+        <![CDATA[SELECT * ]]>
+        <include refid="QUERY_FROM_TABLE"/>
+        <include refid="QUERY_WHERE_CLAUSE"/>
+    </select>
+
+
+</mapper>

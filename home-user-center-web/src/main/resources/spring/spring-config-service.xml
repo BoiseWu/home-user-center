@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop" 
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans 
+    		http://www.springframework.org/schema/beans/spring-beans.xsd
+       		http://www.springframework.org/schema/context 
+     		http://www.springframework.org/schema/context/spring-context.xsd
+     		http://www.springframework.org/schema/tx  
+			http://www.springframework.org/schema/tx/spring-tx.xsd
+			http://www.springframework.org/schema/aop  
+			http://www.springframework.org/schema/aop/spring-aop.xsd"
+       default-autowire="byName">
+       
+	<!-- 注解扫描包 -->
+	<context:component-scan base-package="com.home.user.center" />
+
+  	<!-- start router service aop -->
+	<!--<bean id="platformIdExtractor" class="com.jd.ecc.b2b.shared.common.router.PlatformIdExtractor" /> -->
+   
+	<!-- 启用代码层AOP注解支持 -->
+	<!--<aop:config>-->
+		<!--<aop:pointcut id="platformExtractorPointcut"-->
+			<!--expression="execution(public *  com.jd.ecc.b2b.platform.center.service..*(..))" />-->
+		<!--<aop:aspect id="platformIdExtractorApsect" ref="platformIdExtractor">-->
+			<!--<aop:before pointcut-ref="platformExtractorPointcut" method="getPlatformId" />-->
+			<!--<aop:after pointcut-ref="platformExtractorPointcut" method="removeCurrentPlatformId" />-->
+			<!---->
+		<!--</aop:aspect>-->
+	<!--</aop:config>-->
+
+
+	<!-- important: AOP below is for logging; don't remove! -->
+	<!--<bean id="centerLoggingAop" class="com.jd.ecc.b2b.centerlogging.CenterLoggingAop" />
+	<aop:config>
+		<aop:pointcut id="centerLoggingPointcut"
+					  expression="execution(public * com.jd.ecc.b2b.platform.center.client.*.service.*Service.*(..))" />
+		<aop:aspect ref="centerLoggingAop">
+			<aop:before pointcut-ref="centerLoggingPointcut" method="beforeServiceCall"/>
+			<aop:after pointcut-ref="centerLoggingPointcut" method="afterServiceCall"/>
+		</aop:aspect>
+	</aop:config>-->
+	<!-- end of important notice about logging -->
+
+	<!-- 启用对事务的注解支持 -->
+	<!--<tx:annotation-driven transaction-manager="txManager" />  -->
+</beans>
