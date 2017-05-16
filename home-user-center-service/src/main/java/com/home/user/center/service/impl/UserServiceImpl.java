@@ -97,16 +97,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void createConnection(){
-        final ChatServer server = new ChatServer();
 
-        ChannelFuture f = server.start(new InetSocketAddress(2048));
-        System.out.println("server start................");
-        Runtime.getRuntime().addShutdownHook(new Thread(){
-            @Override
-            public void run() {
-                server.destroy();
-            }
-        });
-        f.channel().closeFuture().syncUninterruptibly();
     }
 }
