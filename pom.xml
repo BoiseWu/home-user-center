@@ -329,6 +329,7 @@
                     <source>1.6</source>
                     <target>1.6</target>
                     <encoding>UTF-8</encoding>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -345,6 +346,7 @@
 
                 <configuration>
                     <testFailureIgnore>true</testFailureIgnore>
+                    <skip>true</skip>
                 </configuration>
             </plugin>
             <plugin>
@@ -367,7 +369,6 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
-
 
         </plugins>
     </build>
